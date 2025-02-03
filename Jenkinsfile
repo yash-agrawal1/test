@@ -23,7 +23,7 @@ pipeline {
                 sh '''
                 ssh ec2-user@172.26.17.194 << 'EOF'
                 sudo yum install -y python3-pip
-                sudo pip3 install pyyaml
+                sudo pip install pyyaml
                 EOF
                 '''
             }
