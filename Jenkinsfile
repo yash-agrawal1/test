@@ -2,11 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Move File') {
-            steps {
-                sh 'mv FILE ${FILE}'
-            }
-        }
         stage('Copy File to Remote Server') {
             steps {
                 sh 'scp ${FILE} ec2-user@172.26.17.194:/var/www/app/'
