@@ -1,12 +1,6 @@
 pipeline {
     agent any
 
-    parameters {
-        string(name: 'FILE', defaultValue: 'your_file_name_here', description: 'File name')
-        string(name: 'DOMAIN', defaultValue: 'your_domain_here', description: 'Domain name')
-        string(name: 'CHUNK_SIZE', defaultValue: 'your_chunk_size_here', description: 'Chunk size')
-    }
-
     stages {
         stage('Move File') {
             steps {
