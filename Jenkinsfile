@@ -10,19 +10,25 @@ pipeline {
     stages {
         stage('Copy File to Remote Server') {
             steps {
-                sh 'scp ${FILE} ec2-user@172.26.17.194:/var/www/app/'
+                script {
+                    def filePath = params.FILE
+                    sh "scp ${filePath} ec2-user@172.26.17.194:/var/www/app/"
+                }
             }
         }
         stage('Execute Commands on Remote Server') {
             steps {
-                sh '''
-                ssh ec2-user@172.26.17.194 <<EOF
-                echo "Domain: $DOMAIN"
-                echo "CHUNK_SIZE=$CHUNK_SIZE"
-                cd /var/www/app/
-                sudo python3 manage.py activate_user_by_domain --domain $DOMAIN --user_id_csv_file ${FILE} --chunk_size $CHUNK_SIZE
-                EOF
-                '''
+                script {
+                    def filePath = params.FILE
+                    sh """
+                    ssh ec2-user@172.26.17.194 <<EOF
+                    echo "Domain: ${params.DOMAIN}"
+                    echo "CHUNK_SIZE=${params.CHUNK_SIZE}"
+                    cd /var/www/app/
+                    sudo python3 manage.py activate_user_by_domain --domain ${params.DOMAIN} --user_id_csv_file ${filePath} --chunk_size ${params.CHUNK_SIZE}
+                    EOF
+                    """
+                }
             }
         }
     }
