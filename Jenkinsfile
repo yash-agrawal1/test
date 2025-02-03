@@ -22,6 +22,7 @@ pipeline {
             steps {
                 sh '''
                 whoami
+                cd workspace/usm-jobs/pipeline-activate-users-by-domain
                 ssh ec2-user@172.26.17.194
                 hostname -i
                 cd /var/www/app/
