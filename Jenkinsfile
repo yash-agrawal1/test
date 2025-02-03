@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout Repository') {
             steps {
-                git url: 'https://github.com/yash-agrawal1/activate_test_user'
+                git branch: 'main', url: 'https://github.com/yash-agrawal1/activate_test_user'
             }
         }
         stage('Copy File to Remote Server') {
