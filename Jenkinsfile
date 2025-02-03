@@ -20,8 +20,9 @@ pipeline {
         }
         stage('Install on Remote Server') {
             steps {
-                sh 'ssh ec2-user@172.26.17.194'
-                sh 'hostname -i'
+                sh """
+                ssh ec2-user@172.26.17.194 "hostname -i"
+                """
                 // sh
                 // '''
                 // hostname -i
