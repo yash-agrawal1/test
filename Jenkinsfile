@@ -18,7 +18,7 @@ pipeline {
                 sh 'scp config.yaml ec2-user@172.26.17.194:/var/www/app/'
             }
         }
-        stage('Install PyYAML on Remote Server') {
+        stage('Install on Remote Server') {
             steps {
                 sh '''
                 ssh ec2-user@172.26.17.194 << EOF
