@@ -22,7 +22,7 @@ pipeline {
             steps {
                 sh """
                 ssh ec2-user@172.26.17.194 'hostname -i' 
-                ssh ec2-user@172.26.17.194 'DOMAIN=${(python3 -c "import yaml; print(yaml.safe_load(open('config.yaml'))['domain'])")}' 
+                ssh ec2-user@172.26.17.194 'DOMAIN=\$(python3 -c "import yaml; print(yaml.safe_load(open('config.yaml'))['domain'])")' 
                 """
             
                 // DOMAIN=$(python3 -c "import yaml; print(yaml.safe_load(open('config.yaml'))['domain'])")
