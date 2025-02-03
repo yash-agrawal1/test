@@ -22,6 +22,10 @@ pipeline {
             steps {
                 sh '''
                 ssh ec2-user@172.27.16.203 <<EOF
+                if ! command -v pip &> /dev/null; then
+                    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+                    sudo python get-pip.py
+                fi
                 sudo pip install pyyaml
                 EOF
                 '''
