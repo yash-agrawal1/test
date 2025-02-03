@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Move File') {
             steps {
-                sh 'mv ${FILE} ${FILE}'
+                sh 'mv FILE ${FILE}'
             }
         }
         stage('Copy File to Remote Server') {
