@@ -21,7 +21,7 @@ pipeline {
         stage('Install PyYAML on Remote Server') {
             steps {
                 sh '''
-                curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+                curl https://bootstrap.pypa.io/pip/3.5/get-pip.py -o get-pip.py
                 sudo python get-pip.py
                 sudo pip install pyyaml
                 '''
