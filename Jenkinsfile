@@ -20,10 +20,10 @@ pipeline {
         }
         stage('Install on Remote Server') {
             steps {
-                sh '''
-                whoami
-                cd workspace/usm-jobs/pipeline-activate-users-by-domain
-                ssh ec2-user@172.26.17.194
+                sh 'ssh ec2-user@172.26.17.194'
+                sh 'hostname -i'
+                sh
+                '''
                 hostname -i
                 cd /var/www/app/
                 pwd
@@ -32,7 +32,6 @@ pipeline {
                 echo "Domain: $DOMAIN"
                 echo "CHUNK_SIZE=$CHUNK_SIZE"
                 sudo python3 manage.py activate_user_by_domain --domain $DOMAIN --user_id_csv_file sheet1.csv --chunk_size $CHUNK_SIZE
-                EOF
                 '''
             }
         }
