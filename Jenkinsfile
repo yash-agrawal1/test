@@ -21,17 +21,9 @@ pipeline {
         stage('Install PyYAML on Remote Server') {
             steps {
                 sh '''
-                ssh ec2-user@172.26.17.194 << 'EOF'
+                ssh ec2-user@172.26.17.194 << EOF
                 sudo yum install -y python3-pip
                 sudo /usr/local/bin/pip3 install pyyaml
-                'EOF'
-                '''
-            }
-        }
-        stage('Execute Commands on Remote Server') {
-            steps {
-                sh '''
-                ssh ec2-user@172.26.17.194 << 'EOF'
                 cd /var/www/app/
                 DOMAIN=$(python3 -c "import yaml; print(yaml.safe_load(open('config.yaml'))['domain'])")
                 CHUNK_SIZE=$(python3 -c "import yaml; print(yaml.safe_load(open('config.yaml'))['chunk_size'])")
