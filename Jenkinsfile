@@ -21,11 +21,8 @@ pipeline {
         stage('Install PyYAML on Remote Server') {
             steps {
                 sh '''
-                ssh ec2-user@172.26.17.194 <<EOF
-                if ! command -v pip &> /dev/null; then
-                    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-                    sudo python get-pip.py
-                fi
+                curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+                sudo python get-pip.py
                 sudo pip install pyyaml
                 EOF
                 '''
