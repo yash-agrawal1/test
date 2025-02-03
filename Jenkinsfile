@@ -30,7 +30,6 @@ pipeline {
                 echo "CHUNK_SIZE=${CHUNK_SIZE}"
                 cd /home/ec2-user/user-service/app/
                 sudo python manage.py activate_user_by_domain --domain ${DOMAIN} --user_id_csv_file sheet1.csv --chunk_size ${CHUNK_SIZE}
-                EOF
                 '''
             }
         }
