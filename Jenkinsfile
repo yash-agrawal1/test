@@ -1,6 +1,6 @@
 pipeline {
     agent any
-
+    
     stages {
         stage('Clean Workspace') {
             steps {
@@ -16,6 +16,15 @@ pipeline {
             steps {
                 sh 'scp sheet1.csv ec2-user@172.27.16.203:/home/ec2-user/user-service/app/'
                 sh 'scp config.yaml ec2-user@172.27.16.203:/home/ec2-user/user-service/app/'
+            }
+        }
+        stage('Install PyYAML on Remote Server') {
+            steps {
+                sh '''
+                ssh ec2-user@172.27.16.203 <<EOF
+                sudo pip install pyyaml
+                EOF
+                '''
             }
         }
         stage('Execute Commands on Remote Server') {
