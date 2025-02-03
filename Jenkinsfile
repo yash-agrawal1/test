@@ -21,7 +21,7 @@ pipeline {
         stage('Parse Config') {
             steps {
                 script {
-                    def output = sh(script: 'python3 yaml_parser.py', returnStdout: true).trim()
+                    def output = sh(script: 'python yaml_parser.py', returnStdout: true).trim()
                     def lines = output.split('\n')
                     env.DOMAIN = lines[0].split(': ')[1]
                     env.CHUNK_SIZE = lines[1].split(': ')[1]
