@@ -21,13 +21,11 @@ pipeline {
         stage('Install on Remote Server') {
             steps {
                 sh """
-                ssh ec2-user@172.26.17.194 '
-                DOMAIN=$(python3 -c "import yaml; print(yaml.safe_load(open('/var/www/app/config.yaml'))['domain'])")
-                CHUNK_SIZE=$(python3 -c "import yaml; print(yaml.safe_load(open('/var/www/app/config.yaml'))['chunk_size'])")
-                echo "Domain: $DOMAIN"
-                echo "CHUNK_SIZE=$CHUNK_SIZE"
-                sudo python3 /var/www/app/manage.py activate_user_by_domain --domain $DOMAIN --user_id_csv_file /var/www/app/sheet1.csv --chunk_size $CHUNK_SIZE
-                '
+                ssh ec2-user@172.26.17.194 'DOMAIN=$(python3 -c "import yaml; print(yaml.safe_load(open('/var/www/app/config.yaml'))['domain'])")'
+                ssh ec2-user@172.26.17.194 'CHUNK_SIZE=$(python3 -c "import yaml; print(yaml.safe_load(open('/var/www/app/config.yaml'))['chunk_size'])")'
+                ssh ec2-user@172.26.17.194 'echo "Domain: $DOMAIN"'
+                ssh ec2-user@172.26.17.194 'echo "CHUNK_SIZE=$CHUNK_SIZE"'
+                ssh ec2-user@172.26.17.194 'sudo python3 /var/www/app/manage.py activate_user_by_domain --domain $DOMAIN --user_id_csv_file /var/www/app/sheet1.csv --chunk_size $CHUNK_SIZE'
                 """
             
                 // DOMAIN=$(python3 -c "import yaml; print(yaml.safe_load(open('config.yaml'))['domain'])")
