@@ -28,11 +28,7 @@ pipeline {
                 ssh ec2-user@172.26.17.194 'echo "Domain: \$DOMAIN"'
                 ssh ec2-user@172.26.17.194 'echo "CHUNK_SIZE=\$CHUNK_SIZE"'
                 ssh ec2-user@172.26.17.194 'sudo python3 manage.py activate_user_by_domain --domain \$DOMAIN --user_id_csv_file sheet1.csv --chunk_size \$CHUNK_SIZE'
-
                 """
-            
-                
-                '''
             }
         }
     }
