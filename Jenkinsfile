@@ -23,6 +23,7 @@ pipeline {
                 sh '''
                 ssh ec2-user@172.26.17.194 << EOF
                 cd /var/www/app/
+                pwd
                 DOMAIN=$(python3 -c "import yaml; print(yaml.safe_load(open('config.yaml'))['domain'])")
                 CHUNK_SIZE=$(python3 -c "import yaml; print(yaml.safe_load(open('config.yaml'))['chunk_size'])")
                 echo "Domain: $DOMAIN"
