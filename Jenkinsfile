@@ -31,14 +31,12 @@ pipeline {
         stage('Execute Commands on Remote Server') {
             steps {
                 sh '''
-                ssh ec2-user@172.26.17.194
                 cd /home/ec2-user/user-service/app/
                 DOMAIN=$(python3 -c "import yaml; print(yaml.safe_load(open('config.yaml'))['domain'])")
                 CHUNK_SIZE=$(python3 -c "import yaml; print(yaml.safe_load(open('config.yaml'))['chunk_size'])")
                 echo "Domain: $DOMAIN"
                 echo "CHUNK_SIZE=$CHUNK_SIZE"
                 sudo python3 manage.py activate_user_by_domain --domain $DOMAIN --user_id_csv_file sheet1.csv --chunk_size $CHUNK_SIZE
-                EOF
                 '''
             }
         }
