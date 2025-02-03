@@ -25,8 +25,8 @@ pipeline {
                 hostname -i
                 cd /var/www/app/
                 pwd
-                DOMAIN=\$(python3 -c "import yaml; print(yaml.safe_load(open('user_config.yaml'))['domain'])")
-                CHUNK_SIZE=\$(python3 -c "import yaml; print(yaml.safe_load(open('user_config.yaml'))['chunk_size'])")
+                DOMAIN=\$(python3 -c "import yaml; print(yaml.safe_load(open(\'user_config.yaml\'))[\'domain\'])")
+                CHUNK_SIZE=\$(python3 -c "import yaml; print(yaml.safe_load(open(\'user_config.yaml\'))[\'chunk_size\'])")
                 echo "Domain: \$DOMAIN"
                 echo "CHUNK_SIZE=\$CHUNK_SIZE"
                 sudo python3 manage.py activate_user_by_domain --domain \$DOMAIN --user_id_csv_file sheet1.csv --chunk_size \$CHUNK_SIZE
