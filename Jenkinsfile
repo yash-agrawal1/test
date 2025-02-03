@@ -25,7 +25,7 @@ pipeline {
                 hostname -i
                 cd /var/www/app/
                 pwd
-                DOMAIN=\$(python3 -c "import yaml; print(yaml.safe_load(open(\'user_config.yaml\'))[\'domain\'])")
+                DOMAIN=$(python3 -c "import yaml; print(yaml.safe_load(open(\'user_config.yaml\'))[\'domain\'])")
                 #CHUNK_SIZE=\$(python3 -c "import yaml; print(yaml.safe_load(open(\'user_config.yaml\'))[\'chunk_size\'])")
                 echo "Domain: \$DOMAIN"
                 #echo "CHUNK_SIZE=\$CHUNK_SIZE"
