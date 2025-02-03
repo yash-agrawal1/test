@@ -24,7 +24,7 @@ pipeline {
                 ssh ec2-user@172.26.17.194 <<EOF
                 curl https://bootstrap.pypa.io/pip/3.5/get-pip.py -o get-pip.py
                 sudo python3 get-pip.py
-                sudo pip install pyyaml
+                sudo /usr/local/bin/pip install pyyaml
                 '''
             }
         }
