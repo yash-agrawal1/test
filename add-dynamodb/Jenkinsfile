@@ -14,8 +14,8 @@ pipeline {
         stage('Read JSON and Update Items in DynamoDB') {
             steps {
                 script {
-                    
-                    sh "cat ${params.CONFIG_JSON}"
+
+                    sh 'cat ${CONFIG_JSON}'
                     // Log the provided parameters
                     echo "Provided parameters: ${params}"
 
