@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    parameters {
+        file(name: 'CONFIG_JSON', description: 'JSON file with config_value as a list of customer IDs')
+    }
+
+    environment {
+        AWS_REGION = 'ap-south-1' 
+        DYNAMO_TABLE = 'nyk_usm_config_pp1'
+    }
+
+    stages {
+
+        stage('Read JSON and Update Items in DynamoDB') {
+            steps {
+                script {
+                    def configFile = readFile(params.CONFIG_JSON)
+                    def configData = readJSON text: configFile
+
+                    def newCustomerIds = configData.config_value.L.collect { it.S }
+                    def newCustomerIdsJson = newCustomerIds.collect { [S: it] }
+
+                    sh """
+                        aws dynamodb update-item \
+                            --table-name ${env.DYNAMO_TABLE} \
+                            --key '{"config_name": {"S": "test_users"}}' \
+                            --update-expression "ADD config_value :newCustomerIds" \
+                            --expression-attribute-values '{":newCustomerIds": {"L": ${groovy.json.JsonOutput.toJson(newCustomerIdsJson)}}}' \
+                            --region ${env.AWS_REGION}
+                    """
+                }
+            }
+        }
+    }
+}
