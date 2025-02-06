@@ -17,11 +17,14 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/yash-agrawal1/activate_test_user'
             }
         }
-         stage('Read JSON and Update Items in DynamoDB') {
+        stage('Read JSON and Update Items in DynamoDB') {
             steps {
                 script {
                     sh "cat config_values.txt"
                     def jsonString = readFile("config_values.txt")
+
+                    // Convert JSON string to list format
+                    def jsonList = jsonString.replaceAll(/[\[\]]/, '')
 
                     // Update DynamoDB
                     sh """
@@ -29,7 +32,7 @@ pipeline {
                             --table-name ${env.DYNAMO_TABLE} \
                             --key '{"config_name": {"S": "test_users"}}' \
                             --update-expression "ADD config_value :newCustomerIds" \
-                            --expression-attribute-values '{":newCustomerIds": {"L": ${jsonString}}}' \
+                            --expression-attribute-values '{":newCustomerIds": {"L": [${jsonList}]}}' \
                             --region ${env.AWS_REGION}
                     """
                 }
