@@ -22,8 +22,7 @@ pipeline {
                 script {
                     sh "cat config_values.json"
                     def configFile = readFile("config_values.json")
-                    def jsonSlurper = new groovy.json.JsonSlurper()
-                    def configData = jsonSlurper.parseText(configFile)
+                    def configData = new groovy.json.JsonOutput().parse(configFile)
 
                     // Extract customer IDs
                     def newCustomerIds = configData.config_value.L.collect { it.S }
