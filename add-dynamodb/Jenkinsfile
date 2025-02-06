@@ -1,13 +1,17 @@
 pipeline {
-  agent any
-  parameters { string(name: 'JSON', defaultValue: 'staging', description: '') }
-  stages {
-      stage ("Example") {
-        steps {
-         script{
-            def jsonObj = readJSON text: "${params.JSON}"
-            echo "$jsonObj"
-        } }
-      }
-  }
+    agent any
+
+    parameters {
+        file(name: 'FILE', description: 'JSON file with config_value as a list of customer IDs')
+    }
+
+    stages {
+        stage('Read JSON and Update Items in DynamoDB') {
+            steps {
+                sh 'cat ${FILE}'
+            }
+        }
+        
+    }
+
 }
