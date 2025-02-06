@@ -13,41 +13,41 @@ pipeline {
     stages {
         stage('Read JSON and Update Items in DynamoDB') {
             steps {
-                script {
-                    sh 'mv ${CONFIG_JSON} ${CONFIG_JSON}'
-                    sh 'cat ${CONFIG_JSON}'
-                    // Log the provided parameters
-                    echo "Provided parameters: ${params}"
+                sh 'cat ${CONFIG_JSON}'
+                // script {
+                //     sh 'cat ${CONFIG_JSON}'
+                //     // Log the provided parameters
+                //     echo "Provided parameters: ${params}"
 
-                    // Check if the file parameter is provided
-                    if (!params.CONFIG_JSON) {
-                        error "CONFIG_JSON parameter is not provided."
-                    }
+                //     // Check if the file parameter is provided
+                //     if (!params.CONFIG_JSON) {
+                //         error "CONFIG_JSON parameter is not provided."
+                //     }
 
-                    // Check if the file exists
-                    def configFilePath = params.CONFIG_JSON
-                    if (!fileExists(configFilePath)) {
-                        error "File ${configFilePath} does not exist."
-                    }
+                //     // Check if the file exists
+                //     def configFilePath = params.CONFIG_JSON
+                //     if (!fileExists(configFilePath)) {
+                //         error "File ${configFilePath} does not exist."
+                //     }
 
-                    // Read the file
-                    def configFile = readFile(configFilePath)
-                    def configData = readJSON text: configFile
+                //     // Read the file
+                //     def configFile = readFile(configFilePath)
+                //     def configData = readJSON text: configFile
 
-                    // Extract customer IDs
-                    def newCustomerIds = configData.config_value.L.collect { it.S }
-                    def newCustomerIdsJson = newCustomerIds.collect { [S: it] }
+                //     // Extract customer IDs
+                //     def newCustomerIds = configData.config_value.L.collect { it.S }
+                //     def newCustomerIdsJson = newCustomerIds.collect { [S: it] }
 
-                    // Update DynamoDB
-                    sh """
-                        aws dynamodb update-item \
-                            --table-name ${env.DYNAMO_TABLE} \
-                            --key '{"config_name": {"S": "test_users"}}' \
-                            --update-expression "ADD config_value :newCustomerIds" \
-                            --expression-attribute-values '{":newCustomerIds": {"L": ${groovy.json.JsonOutput.toJson(newCustomerIdsJson)}}}' \
-                            --region ${env.AWS_REGION}
-                    """
-                }
+                //     // Update DynamoDB
+                //     sh """
+                //         aws dynamodb update-item \
+                //             --table-name ${env.DYNAMO_TABLE} \
+                //             --key '{"config_name": {"S": "test_users"}}' \
+                //             --update-expression "ADD config_value :newCustomerIds" \
+                //             --expression-attribute-values '{":newCustomerIds": {"L": ${groovy.json.JsonOutput.toJson(newCustomerIdsJson)}}}' \
+                //             --region ${env.AWS_REGION}
+                //     """
+                // }
             }
         }
         
