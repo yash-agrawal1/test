@@ -15,12 +15,26 @@ pipeline {
         stage('Read JSON and Update Items in DynamoDB') {
             steps {
                 script {
-                    def configFile = readFile(params.CONFIG_JSON)
+                    // Check if the file parameter is provided
+                    if (!params.CONFIG_JSON) {
+                        error "CONFIG_JSON parameter is not provided."
+                    }
+
+                    // Check if the file exists
+                    def configFilePath = params.CONFIG_JSON
+                    if (!fileExists(configFilePath)) {
+                        error "File ${configFilePath} does not exist."
+                    }
+
+                    // Read the file
+                    def configFile = readFile(configFilePath)
                     def configData = readJSON text: configFile
 
+                    // Extract customer IDs
                     def newCustomerIds = configData.config_value.L.collect { it.S }
                     def newCustomerIdsJson = newCustomerIds.collect { [S: it] }
 
+                    // Update DynamoDB
                     sh """
                         aws dynamodb update-item \
                             --table-name ${env.DYNAMO_TABLE} \
