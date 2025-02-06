@@ -6,6 +6,11 @@ pipeline {
     }
 
     stages {
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
         stage('Read JSON and Update Items in DynamoDB') {
             steps {
                 
