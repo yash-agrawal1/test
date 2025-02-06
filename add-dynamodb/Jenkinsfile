@@ -27,7 +27,7 @@ pipeline {
                         aws dynamodb update-item \
                             --table-name ${env.DYNAMO_TABLE} \
                             --key '{"config_name": {"S": "test_users"}}' \
-                            --update-expression "SET config_value = :newCustomerIds" \
+                            --update-expression "ADD config_value = :newCustomerIds" \
                             --expression-attribute-values '{":newCustomerIds": ${jsonString}}' \
                             --region ${env.AWS_REGION}
                     """
