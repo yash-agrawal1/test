@@ -9,13 +9,13 @@ pipeline {
         }
         stage('Checkout Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/Nykaa/custom-jobs'
+                git branch: 'main', url: 'https://github.com/yash-agrawal1/activate_test_user'
             }
         }
         stage('Read JSON and Update Items in DynamoDB') {
             steps {
                 
-                sh "cat usm/add-items-dynamodb/config_values.json"
+                sh "cat config_values.json"
             }
         }
     }
