@@ -19,10 +19,11 @@ pipeline {
         }
         stage('Read JSON and Update Items in DynamoDB') {
             steps {
-                script{
+                script {
                     sh "cat config_values.json"
                     def configFile = readFile("config_values.json")
-                    def configData = readJSON text: configFile
+                    def jsonSlurper = new groovy.json.JsonSlurper()
+                    def configData = jsonSlurper.parseText(configFile)
 
                     // Extract customer IDs
                     def newCustomerIds = configData.config_value.L.collect { it.S }
@@ -38,9 +39,7 @@ pipeline {
                             --region ${env.AWS_REGION}
                     """
                 }
-                
             }
-            
         }
     }
 }
