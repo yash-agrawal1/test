@@ -24,7 +24,7 @@ pipeline {
                     def jsonString = readFile("config_values.txt")
 
                     // Convert JSON string to list format
-                    def jsonList = jsonString.replaceAll(/[\[\]]/, '')
+                    def jsonList = jsonString.split(',').collect { it.trim() }.collect { "{\"S\": \"${it}\"}" }.join(',')
 
                     // Update DynamoDB
                     sh """
