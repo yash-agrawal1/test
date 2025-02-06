@@ -18,7 +18,7 @@ pipeline {
                     echo "Provided parameters: ${params}"
 
                     // Check if the file parameter is provided
-                    if (!params.CONFIG_JSON) {
+                    if (!${CONFIG_JSON}) {
                         error "CONFIG_JSON parameter is not provided."
                     }
 
