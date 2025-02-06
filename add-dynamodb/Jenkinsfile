@@ -8,6 +8,9 @@ pipeline {
     stages {
         stage('Read JSON and Update Items in DynamoDB') {
             steps {
+                script {
+                    echo "File parameter: ${params.FILE}"
+                }
                 sh "cat ${params.FILE}"
             }
         }
