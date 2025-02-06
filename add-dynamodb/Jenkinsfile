@@ -11,10 +11,12 @@ pipeline {
     }
 
     stages {
-
         stage('Read JSON and Update Items in DynamoDB') {
             steps {
                 script {
+                    // Log the provided parameters
+                    echo "Provided parameters: ${params}"
+
                     // Check if the file parameter is provided
                     if (!params.CONFIG_JSON) {
                         error "CONFIG_JSON parameter is not provided."
@@ -46,5 +48,7 @@ pipeline {
                 }
             }
         }
+        
     }
+
 }
